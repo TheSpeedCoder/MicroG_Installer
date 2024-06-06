@@ -1,22 +1,17 @@
-# A Micro G Installer, for Android 14 (Nothing Phone 2 [Pong] - Pixel 8 [Shiba])
-# This is a fork of 532910's MicroG installer
-# THIS WILL NOT BE GIVEN SUPPORT!!!!!!!!
+# An official un supported Micro G Installer!
+Forked from 532910's Micro G installer
 
-This is just a fork that adds Micro G with Playstore and nothing else!
-On my personal Pong and Shiba i cannnot install any Micro G installers without using magisk
-as there seems to be an issue with free space on both devices @ /mnt/system with crDroid
-I'm hoping this works!
+Again this will not be supported in anyway shape it's just a mean to an end
+If you really want to fork and fix things please do so in your own repo
 
-NO SUPPORT WILL BE GIVEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Currently on my Nothing Phone 2 / Pixel 8 (Android 14) I can't install any micro g installer due to an issue with /mnt/system storage space and on some other installers
+there seems to just be an issue with CRDroids recovery
 
-With thanks to 532910
+Until everything is fixed I plan to use this to install Micro G with a working Playstore so I can access apps and use family library etc etc (More for apps really)
+
+#Currently untested!!!
+// Installer
+// OTA
 
 
-
-This is a simple rework of [fdroid privileged-extension](https://gitlab.com/fdroid/privileged-extension)
-that icludes [microG](https://github.com/microg) and [Aurora Services](https://gitlab.com/AuroraOSS/AuroraServices)
-and supports installation on [crDroid](https://crdroid.net/) 9.
-
-This is not a project that I'm gonna support, just sharing my experience.
-
-Only OTA updates will be survived. Trying to do `Local update` will remove installed apps.
+#I would also like to provide thanks to 532910 for the original flashable script and installer! <3
