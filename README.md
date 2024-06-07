@@ -1,17 +1,32 @@
-# An official un supported Micro G Installer!
-Forked from 532910's Micro G installer
+# A script to install Micro G!
+Forked from @532910's Micro G installer!
 
-Again this will not be supported in anyway shape it's just a mean to an end
-If you really want to fork and fix things please do so in your own repo
+First things first this is not a supported project and support is not promised or planned at all!!!
+It's just a means to an end until other more smarter people fix issues with their installers
 
-Currently on my Nothing Phone 2 / Pixel 8 (Android 14) I can't install any micro g installer due to an issue with /mnt/system storage space and on some other installers
-there seems to just be an issue with CRDroids recovery
+So if you have a device (Android 14) and are running a rom like eg CrDroid this is for you.
+Why use this script?
+   - Works with CrDroid Recovery
+     - Issues with /mnt/system storage fixed by using the Product partition
+     - Not wanting to use Magisk or Safetynet/Integrity modules (Most roms pass by default so there is no need unless you need root access)
+     - Working Playstore (Changed to Aurora Store)
+     - OTA support (Untested Don't use on local upgrades)
+     - Uninstaller (Nothing written yet)
 
-Until everything is fixed I plan to use this to install Micro G with a working Playstore so I can access apps and use family library etc etc (More for apps really)
+This installer uses the latest version of all apps at the time and yes even though it's depredecated (Aurora Store EXT) it's included until I change it
 
-#Currently untested!!!
-// Installer
-// OTA
+Feature's
+   - The Aurora Store
+   - The Aurora Store EXT installer
+   - The F Droid Store
+   - The F Droid EXT Installer
+   - Micro G's GMS Core
+   - Micro G's GMS Core Proxy
+   - Micro G's Location Services
+   - Micro G's FakeStore
+   - PLANNED OTA Survival (Currently untested and AGAIN PLANNED NOT 100%%%)
+   - Banking apps such as Starling are working fine! (CURRENTLY!!!)
+
 
 
 #I would also like to provide thanks to 532910 for the original flashable script and installer! <3
