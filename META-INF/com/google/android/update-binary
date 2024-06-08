@@ -6,15 +6,24 @@
 # arg 3 is the zip file
 
 TERM="/proc/self/fd/$2"
-
+# Permissions
+PERM_FDROID='privapp-permissions-org.fdroid.fdroid.privileged.xml'
+PERM_ASS='privapp-permissions-com.aurora.services.xml'
 PERM_GMS='privapp-permissions-com.google.android.gms.xml'
-PERM_STORE='privapp-permissions-com.android.vending.xml'
+PERM_PLAYSTORE='privapp-permissions-com.android.vending.xml'
 PERM_MAPS='privapp-permissions-com.google.android.maps.xml'
-
+# FDroid Stuff
+FPE=F-DroidPrivilegedExtension
+FDROID=F-Droid
+# Aurora Stuff
+ASS=AuroraServices
+AS=AuroraStore
+# Micro G Stuff
 GMS=GmsCore
-STORE=Phonesky
-
-ADDOND=80-Phonesky.sh
+GMSP=GmsProxy
+PLAYSTORE=FakeStore
+MAPJAR=com.google.android.maps.jar
+ADDOND=80-script.sh
 SYSTEM="/mnt/system/system"
 SYSTEM_MOUNT="/mnt/system"
 PRODUCT="/mnt/product"
@@ -42,7 +51,10 @@ install() {
 	rm -f "$dir/$src"
 	cp "$src" "$dir"
 	chmod 644 "$dir/$src"
-	end ' done'
+	say '> When finished if CrDroid recovery just stays on Script Complete it failed!'
+	say '> Please reflash Stock firmware and sideload CrDroid or rom again as it will bootloop!'
+	say '> But should it take you back you should be good to go!'
+	end ' Script Complete'
 }
 
 showdir() {
@@ -59,8 +71,8 @@ showfile() {
 
 say 'Begin...'
 cd /tmp
-mkdir Phonesky
-cd Phonesky
+mkdir fdroid
+cd fdroid
 unzip -o "$3"
 
 begin "mounting: "
@@ -70,37 +82,66 @@ begin "mounting: "
 end /dev/block/mapper/product_[ab]
 mount /dev/block/mapper/product_[ab] $PRODUCT_MOUNT
 
+# Removes everything  but permissions? (For OTA Survival?)
+rm -rf "$SYSTEM/app/F-Droid"*
+rm -rf "$SYSTEM/priv-app/F-Droid"*
+rm -rf "$SYSTEM/priv-app/AuroraServices"*
 rm -rf "$SYSTEM/priv-app/GmsCore"*
+rm -rf "$SYSTEM/priv-app/FakeStore"*
+rm -rf "$PRODUCT/app/F-Droid"*
+rm -rf "$PRODUCT/priv-app/F-Droid"*
+rm -rf "$PRODUCT/priv-app/AuroraServices"*
 rm -rf "$PRODUCT/priv-app/GmsCore"*
-rm -rf "$PRODUCT/priv-app/Phonesky"*
+rm -rf "$PRODUCT/priv-app/FakeStore"*
 
+#FPE_DIR="$SYSTEM/priv-app/$FPE"
+#FDROID_DIR="$SYSTEM/app/$FDROID"
+#ASS_DIR="$SYSTEM/priv-app/$ASS"
 #GMS_DIR="$SYSTEM/priv-app/$GMS"
-# Micro G Services
+FPE_DIR="$PRODUCT/priv-app/$FPE"
+FDROID_DIR="$PRODUCT/app/$FDROID"
+ASS_DIR="$PRODUCT/priv-app/$ASS"
+AS_DIR="$PRODUCT/app/$AS"
 GMS_DIR="$PRODUCT/priv-app/$GMS"
-#PlayStore
-STORE_DIR="$PRODUCT/priv-app/$STORE"
-#Proxy
-PROXY_DIR="$PRODUCT/priv-app/$Proxy"
-#Map API
-MAPS_DIR="$PRODUCT/framework/$MAPS"
+GMSP_DIR="$PRODUCT/priv-app/$GMSP"
+PLAYSTORE_DIR="$PRODUCT/priv-app/$PLAYSTORE"
 
+# Install apps
 install 'GmsCore'                    $GMS.apk    $GMS_DIR
-install 'GsfProxy'                   $Proxy.apk  $Proxy_DIR
-install 'Phonesky'                  $STORE.apk  $STORE_DIR
-install 'MAPS'                      $com.google.android.maps.jar $MAPS_DIR
-
+install 'GmsProxy'                    $GMSP.apk    $GMSP_DIR
+install 'FakeStore'                  $PLAYSTORE.apk  $PLAYSTORE_DIR
+install 'F-DroidPrivilegedExtension' $FPE.apk    $FPE_DIR
+install 'F-Droid'                    $FDROID.apk $FDROID_DIR
+install 'AuroraServices'             $ASS.apk $ASS_DIR
+install 'AuroraStore'                    $AS.apk    $AS_DIR
+# Install Permissions
+install 'F-DroidPrivilegedExtension permissions' $PERM_FDROID $PERM_DIR
+install 'AuroraServices permissions' $PERM_ASS $PERM_DIR
 install 'GmsCore permissions' $PERM_GMS $PERM_DIR
-install 'Phonesky permissions' $PERM_STORE $PERM_DIR
-install 'MapsPerms'            $PERM_MAPS $PERM_DIR
+install 'FakeStore permissions' $PERM_PLAYSTORE $PERM_DIR
+# MAPS NEW
+install 'Map jar permissions' $PERM_MAPS $PERM_DIR
 
+#say $(md5sum "$PERM_DIR/$PERM_FDROID")
+#say $(md5sum "$PERM_DIR/$PERM_ASS")
 #say $(md5sum "$PERM_DIR/$PERM_GMS")
 
+#showfile $PERM_DIR/$PERM_FDROID
+#showfile $PERM_DIR/$PERM_ASS
 #showfile $PERM_DIR/$PERM_GMS
 
+#say $(md5sum "$FPE_DIR/$FPE.apk")
+#say $(md5sum "$FDROID_DIR/$FDROID.apk")
+#say $(md5sum "$ASS_DIR/$ASS.apk")
 #say $(md5sum "$GMS_DIR/$GMS.apk")
-#say $(md5sum "$STORE_DIR/$STORE.apk")
+#say $(md5sum "$PLAYSTORE_DIR/$PLAYSTORE.apk")
+#showfile "$FPE_DIR/$FPE.apk"
+#showfile "$FDROID_DIR/$FDROID.apk"
+#showfile "$ASS_DIR/$ASS.apk"
 #showfile "$GMS_DIR/$GMS.apk"
 
+# Copy map jar
+cp $MAPJAR $SYSTEM/framework
 cp $ADDOND $SYSTEM/addon.d/
 #chmod +x $SYSTEM/addon.d/$ADDOND
 
